@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ง้อแฟนจากใจ 💌</title>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Prompt', sans-serif;
+        text-align: center;
+        background: linear-gradient(270deg, #fbd3e9, #bb377d, #ffdde1);
+        background-size: 600% 600%;
+        animation: bgAnimation 10s ease infinite;
+        overflow: hidden;
+        color: white;
+    }
+    @keyframes bgAnimation {
+        0%{background-position:0% 50%}
+        50%{background-position:100% 50%}
+        100%{background-position:0% 50%}
+    }
+    h1 {
+        margin-top: 50px;
+        font-size: 2.5rem;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    }
+    .envelope {
+        position: relative;
+        margin: 50px auto;
+        width: 200px;
+        height: 150px;
+        background: #ff6f91;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        cursor: pointer;
+        transition: transform 0.3s;
+    }
+    .envelope:hover { transform: scale(1.05); }
+    .flap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 0;
+        border-left: 100px solid transparent;
+        border-right: 100px solid transparent;
+        border-bottom: 75px solid #ff4f7d;
+        border-radius: 10px 10px 0 0;
+    }
+    .letter {
+        position: absolute;
+        top: 20px;
+        left: 15px;
+        width: 170px;
+        height: 100px;
+        background: white;
+        border-radius: 5px;
+        padding: 10px;
+        box-sizing: border-box;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: 0.6s;
+        color: #333;
+        font-style: italic;
+    }
+    .show-letter {
+        opacity: 1 !important;
+        transform: translateY(-30px) !important;
+    }
+    #typedMessage {
+        font-size: 1.3rem;
+        margin-top: 30px;
+        min-height: 50px;
+    }
+    .heart, .flower, .star {
+        position: absolute;
+        animation: floatUp 6s linear infinite;
+        opacity: 0.8;
+    }
+    .heart { color: pink; font-size: 20px; }
+    .flower { color: #ffe4e1; font-size: 20px; }
+    .star { color: gold; font-size: 15px; }
+    @keyframes floatUp {
+        0% { transform: translateY(0) scale(1);}
+        100% { transform: translateY(-800px) scale(1.5);}
+    }
+</style>
+</head>
+<body>
+
+<h1>ถึงคนที่พิเศษที่สุด 💖</h1>
+
+<div class="envelope" onclick="openLetter()">
+    <div class="flap"></div>
+    <div class="letter" id="letter">
+        กำลังเปิดด
+    </div>
+</div>
+
+<div id="typedMessage"></div>
+
+<script>
+    const messages = [
+        "เค้าขอโทษสำหรับทุกอย่างที่ผ่านมานะครับเค้ารู้แล้วค้าบ ว่าเค้าผิดทั้งหมดเค้าทำให้อ้วนเสียใจเค้าทำให้อ้วนร้องให้ 🥺 แต่เค้าสัญญาว่า ถ้ามีโอกาส เค้าจะทำให้ดีที่สุดนะค้าบบ เค้ารักอ้วนๆมากๆนะค้าบบ เค้าพร้อมที่จะก้าวผ่านทุกๆอย่างไปพร้อมอ้วนๆจริงๆนะค้าบบ เค้าจะไม่ปล่อยมือจากอ้วนอีกแล้ว",
+        
+    ];
+
+    function openLetter(){
+        const letter = document.getElementById("letter");
+        letter.classList.add("show-letter");
+        setTimeout(() => {
+            typeWriter(messages[Math.floor(Math.random()*messages.length)]);
+            createFloating();
+        }, 800);
+    }
+
+    function typeWriter(text) {
+        let i = 0;
+        const speed = 70;
+        const typedMessage = document.getElementById("typedMessage");
+        typedMessage.innerHTML = "";
+        function typing() {
+            if (i < text.length) {
+                typedMessage.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typing, speed);
+            }
+        }
+        typing();
+    }
+
+    function createFloating() {
+        const symbols = ["💖","🌸","⭐"];
+        for(let i=0; i<15; i++){
+            let el = document.createElement("div");
+            let type = symbols[Math.floor(Math.random()*symbols.length)];
+            el.innerHTML = type;
+            if(type === "💖") el.classList.add("heart");
+            else if(type === "🌸") el.classList.add("flower");
+            else el.classList.add("star");
+            el.style.left = Math.random()*100 + "vw";
+            el.style.fontSize = (Math.random()*20 + 15) + "px";
+            document.body.appendChild(el);
+            setTimeout(()=>{el.remove();}, 6000);
+        }
+    }
+</script>
+
+</body>
+</html>
